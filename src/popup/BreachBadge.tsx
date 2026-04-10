@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { BreachCheckResult } from "@/breach/types";
+import t from "@/i18n/tr";
 
 interface BreachBadgeProps {
   domain: string;
@@ -41,8 +42,7 @@ export default function BreachBadge({ domain }: BreachBadgeProps) {
     >
       <span style={{ fontSize: 14 }}>{"\uD83D\uDD13"}</span>
       <span>
-        Bu sitede veri sizintisi tespit edildi: {latest.name} ({latest.date}).
-        Sizabilecek veriler: {latest.dataTypes.join(", ")}
+        {t.breach.badgeDetected(latest.name, latest.date, latest.dataTypes.join(", "))}
       </span>
     </div>
   );

@@ -2,6 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import DashboardTab from "@/popup/DashboardTab";
+import t from "@/i18n/tr";
 
 describe("DashboardTab", () => {
   const mockDashboard = {
@@ -9,7 +10,7 @@ describe("DashboardTab", () => {
     breakdown: { httpsScore: 25, threatAvoidanceScore: 27, activityScore: 10, trackerScore: 10 },
     currentWeek: { urlsChecked: 50, httpsCount: 45, httpCount: 5, threatsBlocked: 2, trackersBlocked: 30, dangerousSitesVisited: 0, suspiciousSitesVisited: 1, weekStart: Date.now() },
     previousWeek: null,
-    tips: ["Guvenli olmayan (HTTP) sitelere dikkat edin. HTTPS olan alternatifleri tercih edin."],
+    tips: [t.tips.insecureHttp],
   };
 
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe("DashboardTab", () => {
     render(<DashboardTab />);
     await waitFor(() => {
       expect(screen.getAllByText("HTTPS").length).toBeGreaterThanOrEqual(1);
-      expect(screen.getByText("Tehdit")).toBeDefined();
+      expect(screen.getByText(t.dashboard.threat)).toBeDefined();
       expect(screen.getByText("Aktivite")).toBeDefined();
       expect(screen.getAllByText("Tracker").length).toBeGreaterThanOrEqual(1);
     });
@@ -49,6 +50,6 @@ describe("DashboardTab", () => {
   it("shows loading state initially", () => {
     chrome.runtime.sendMessage = vi.fn() as unknown as typeof chrome.runtime.sendMessage;
     render(<DashboardTab />);
-    expect(screen.getByText("Yukleniyor...")).toBeDefined();
+    expect(screen.getByText(t.loading)).toBeDefined();
   });
 });

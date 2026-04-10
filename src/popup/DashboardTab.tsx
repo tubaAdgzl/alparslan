@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import type { DashboardData } from "@/dashboard/types";
+import t from "@/i18n/tr";
 
 const BREAKDOWN_LABELS: { key: keyof DashboardData["breakdown"]; label: string; max: number; color: string }[] = [
   { key: "httpsScore", label: "HTTPS", max: 30, color: "#22c55e" },
-  { key: "threatAvoidanceScore", label: "Tehdit", max: 30, color: "#3b82f6" },
+  { key: "threatAvoidanceScore", label: t.dashboard.threat, max: 30, color: "#3b82f6" },
   { key: "activityScore", label: "Aktivite", max: 20, color: "#8b5cf6" },
-  { key: "trackerScore", label: "Tracker", max: 20, color: "#f59e0b" },
+  { key: "trackerScore", label: t.dashboard.tracker, max: 20, color: "#f59e0b" },
 ];
 
 function getScoreColor(score: number): string {
@@ -31,7 +32,7 @@ export default function DashboardTab() {
   if (!dashboard) {
     return (
       <div style={{ padding: 24, textAlign: "center", color: "#9ca3af", fontSize: 13 }}>
-        Yukleniyor...
+        {t.loading}
       </div>
     );
   }
@@ -55,7 +56,7 @@ export default function DashboardTab() {
         >
           <span style={{ fontSize: 28, fontWeight: 700, color: scoreColor }}>{dashboard.score}</span>
         </div>
-        <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>Haftalik Guvenlik Skoru</div>
+        <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.dashboard.weeklyScore}</div>
       </div>
 
       {/* Breakdown */}
@@ -79,7 +80,7 @@ export default function DashboardTab() {
 
       {/* Weekly Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 16 }}>
-        <MiniStat label="Kontrol" value={dashboard.currentWeek.urlsChecked} />
+        <MiniStat label={t.dashboard.control} value={dashboard.currentWeek.urlsChecked} />
         <MiniStat
           label="HTTPS"
           value={
@@ -88,14 +89,14 @@ export default function DashboardTab() {
               : "0%"
           }
         />
-        <MiniStat label="Engellenen Tehdit" value={dashboard.currentWeek.threatsBlocked} />
-        <MiniStat label="Engellenen Tracker" value={dashboard.currentWeek.trackersBlocked} />
+        <MiniStat label={t.dashboard.blockedThreat} value={dashboard.currentWeek.threatsBlocked} />
+        <MiniStat label={t.dashboard.blockedTracker} value={dashboard.currentWeek.trackersBlocked} />
       </div>
 
       {/* Tips */}
       {dashboard.tips.length > 0 && (
         <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 6, padding: "8px 12px" }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: "#92400e", marginBottom: 4 }}>Oneriler</div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: "#92400e", marginBottom: 4 }}>{t.dashboard.suggestions}</div>
           {dashboard.tips.map((tip, i) => (
             <div key={i} style={{ fontSize: 11, color: "#78350f", padding: "2px 0" }}>
               * {tip}

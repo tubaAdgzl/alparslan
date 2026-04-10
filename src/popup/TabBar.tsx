@@ -1,4 +1,4 @@
-export type TabId = "status" | "dashboard";
+export type TabId = "status" | "dashboard" | "settings";
 
 interface TabBarProps {
   activeTab: TabId;
@@ -8,6 +8,7 @@ interface TabBarProps {
 const TABS: { id: TabId; label: string }[] = [
   { id: "status", label: "Durum" },
   { id: "dashboard", label: "Skor" },
+  { id: "settings", label: "Ayarlar" },
 ];
 
 export default function TabBar({ activeTab, onTabChange }: TabBarProps) {

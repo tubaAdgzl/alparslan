@@ -21,7 +21,7 @@ describe("BreachBadge", () => {
     }) as unknown as typeof chrome.runtime.sendMessage;
     render(<BreachBadge domain="example.com" />);
     await waitFor(() => {
-      expect(screen.getByText(/veri sizintisi/)).toBeDefined();
+      expect(screen.getByText(/veri sızıntısı/)).toBeDefined();
     });
   });
 
